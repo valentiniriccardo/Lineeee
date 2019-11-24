@@ -1,6 +1,5 @@
 package com.company;
 
-import javax.imageio.plugins.jpeg.JPEGHuffmanTable;
 import javax.swing.*;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
@@ -9,7 +8,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import java.awt.geom.*;
+import java.awt.geom.Ellipse2D;
+import java.awt.geom.Line2D;
 import java.util.Hashtable;
 import java.util.Random;
 
@@ -35,7 +35,7 @@ class Graphical extends javax.swing.JFrame {
 
     private EventHandlerFormChanger ehfc;
 
-    public Graphical(){
+    public Graphical() {
         this.setBackground(defaultPlotAreaBackgroundColor);                         //setto la menu bar del colore sopra
         this.getContentPane().setBackground(defaultPlotAreaBackgroundColor);        //setto lo sfondo del frame di quel colore
         ehfc = new EventHandlerFormChanger();
@@ -49,10 +49,17 @@ class Graphical extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(jItem, "Meme", "InfoBox: ", JOptionPane.INFORMATION_MESSAGE);
             }
 
-            public void mousePressed(MouseEvent e) {}
-            public void mouseReleased(MouseEvent e) {}
-            public void mouseEntered(MouseEvent e) {}
-            public void mouseExited(MouseEvent e) {}
+            public void mousePressed(MouseEvent e) {
+            }
+
+            public void mouseReleased(MouseEvent e) {
+            }
+
+            public void mouseEntered(MouseEvent e) {
+            }
+
+            public void mouseExited(MouseEvent e) {
+            }
         });
         jmFile.add(jItem);
         jmb.add(jmFile);
@@ -73,17 +80,17 @@ class Graphical extends javax.swing.JFrame {
 
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setLayout(null);
-        this.setSize(1280,720);
+        this.setSize(1280, 720);
 
-        plotArea.setBounds(0,60, 1280, 660);
+        plotArea.setBounds(0, 60, 1280, 660);
         rightFreeArea.setBounds(960, 0, 320, 60);
         sliderArea.setBounds(480, 0, 320, 60);
 
-        this.screenX0 = (double)this.getWidth()/2;
-        this.screenY0 = (double)this.getHeight()/2 + (double)sliderArea.getHeight() / 2;
+        this.screenX0 = (double) this.getWidth() / 2;
+        this.screenY0 = (double) this.getHeight() / 2 + (double) sliderArea.getHeight() / 2;
         setTitle("Memedetta drawing");
 
-        maximumSpace = (int)(plotArea.getHeight() / 2.3);
+        maximumSpace = (int) (plotArea.getHeight() / 2.3);
 
         sliderArea.add(linesSlider);
         rightFreeArea.setBackground(Color.red);
@@ -98,26 +105,27 @@ class Graphical extends javax.swing.JFrame {
         plotArea.setBackground(defaultPlotAreaBackgroundColor);
     }
 
-    private void setColorPaletteButton(){
-       // colorPaletteButton.setBorderPainted(true);
+    private void setColorPaletteButton() {
+        // colorPaletteButton.setBorderPainted(true);
         colorPaletteButton.setFont(new Font("Futura", 0, 15));
         colorPaletteButton.setBackground(new Color(9, 67, 56));
         colorPaletteButton.setBounds(960, 20, 200, 20);
         colorPaletteButton.setVisible(true);
         colorPaletteButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                selectionButtonPressed();}
+                selectionButtonPressed();
+            }
         });
     }
 
-    private void selectionButtonPressed(){
+    private void selectionButtonPressed() {
         colorPalette.setBackground(defaultPlotAreaBackgroundColor);
         colorPalette.setDefaultCloseOperation(HIDE_ON_CLOSE);
         colorPalette.setSize(500, 500);
         colorPalette.setResizable(false);
         Random r = new Random();
-        for (int i = 0; i < colorPalette.getSize().width; i += 10){
-            for (int j = 0; j < colorPalette.getSize().height; j += 10){
+        for (int i = 0; i < colorPalette.getSize().width; i += 10) {
+            for (int j = 0; j < colorPalette.getSize().height; j += 10) {
                 JPanel temp = new JPanel();
                 temp.setBounds(i, j, 10, 10);
                 temp.setBackground(new Color(r.nextInt(255), r.nextInt(255), r.nextInt(255)));
@@ -126,15 +134,20 @@ class Graphical extends javax.swing.JFrame {
                     public void mouseClicked(MouseEvent e) {
                         ehfc.ColorSelected(temp);
                     }
-                    //Roba obbligatoria inutile
-                    public void mousePressed(MouseEvent e) {}
-                    public void mouseReleased(MouseEvent e) {
 
+                    //Roba obbligatoria inutile
+                    public void mousePressed(MouseEvent e) {
                     }
+
+                    public void mouseReleased(MouseEvent e) {
+                    }
+
                     public void mouseEntered(MouseEvent e) {
 
                     }
-                    public void mouseExited(MouseEvent e) {}
+
+                    public void mouseExited(MouseEvent e) {
+                    }
 
                 });
                 temp.setVisible(true);
@@ -143,10 +156,11 @@ class Graphical extends javax.swing.JFrame {
         }
         colorPalette.setVisible(true);
     }
-    private void setDataInfoArea(Color color){
+
+    private void setDataInfoArea(Color color) {
         dataInfoArea = new JPanel();
         dataInfoArea.setLayout(null);
-        linesLabel = new JLabel("Linee: " + String.valueOf(lineNumber));
+        linesLabel = new JLabel("Linee: " + lineNumber);
         linesLabel.setVisible(true);
         linesLabel.setForeground(Color.white);
         linesLabel.setHorizontalAlignment(SwingConstants.CENTER);
@@ -154,12 +168,12 @@ class Graphical extends javax.swing.JFrame {
         linesLabel.setFont(new Font("Futura", 0, 20));
         linesLabel.setBounds(10, 0, 120, 60);
         dataInfoArea.setForeground(Color.white);
-        dataInfoArea.setBounds(0,0,480,60);
+        dataInfoArea.setBounds(0, 0, 480, 60);
         dataInfoArea.add(linesLabel);
         dataInfoArea.setBackground(color);
     }
 
-    private void drawGrid(@org.jetbrains.annotations.NotNull Graphics2D g2, Color c){
+    private void drawGrid(@org.jetbrains.annotations.NotNull Graphics2D g2, Color c) {
         int angleStep = 4;
         Color temp = g2.getColor();
         g2.setColor(c);
@@ -214,9 +228,9 @@ class Graphical extends javax.swing.JFrame {
         System.out.println(offsetX);
         System.out.println(offsetY);*/
 
-        for(int i = 0; i < lineNumber; i++){
+        for (int i = 0; i < lineNumber; i++) {
             g2.setColor(c);
-            l = new Line2D.Double(screenX0 - i * (spaceBetweenLines), screenY0, screenX0 , screenY0 - (lineNumber - i) * spaceBetweenLines);
+            l = new Line2D.Double(screenX0 - i * (spaceBetweenLines), screenY0, screenX0, screenY0 - (lineNumber - i) * spaceBetweenLines);
             g2.draw(l);
             l = new Line2D.Double(screenX0 + lineNumber * spaceBetweenLines - i * spaceBetweenLines, screenY0, screenX0, screenY0 - i * spaceBetweenLines);
             g2.draw(l);
@@ -226,12 +240,12 @@ class Graphical extends javax.swing.JFrame {
             g2.draw(l);
         }
         g2.setFont(new Font("Futura", 0, 15));
-        for(int i = 0; i <= lineNumber; i+=angleStep){
+        for (int i = 0; i <= lineNumber; i += angleStep) {
             double slice = 0;
             if (lineNumber != 0) {
                 slice = (double) TOTAL_DEGREES / (maxLineNumber + angleStep);
                 g2.setColor(Color.white);
-                g2.drawString(String.valueOf(i),(int)(Math.cos(Math.toRadians(slice * i + 180)) * 300 + screenX0), (int)(Math.sin(Math.toRadians(slice * i + 180)) * 300 + screenY0) + 3);
+                g2.drawString(String.valueOf(i), (int) (Math.cos(Math.toRadians(slice * i + 180)) * 300 + screenX0), (int) (Math.sin(Math.toRadians(slice * i + 180)) * 300 + screenY0) + 3);
             }
         }
 
@@ -239,17 +253,17 @@ class Graphical extends javax.swing.JFrame {
 
     }
 
-    private void setLineNumber(int i){
-        if( i >= 0)
+    private void setLineNumber(int i) {
+        if (i >= 0)
             lineNumber = i;
     }
 
-    private void setMaximumSpace(int i){
-        if( i > 0)
+    private void setMaximumSpace(int i) {
+        if (i > 0)
             maximumSpace = i;
     }
 
-    private JSlider initSlider(){
+    private JSlider initSlider() {
         DefaultBoundedRangeModel model = new DefaultBoundedRangeModel(lineNumber, 0, 0, maxLineNumber);
         JSlider slider = new JSlider(model);
         setPreferredSize(new Dimension(220, 60));
@@ -264,16 +278,16 @@ class Graphical extends javax.swing.JFrame {
             public void stateChanged(ChangeEvent e) {
                 setLineNumber(slider.getValue());
                 Graphical.super.repaint();
-                linesLabel.setText("Linee: " + String.valueOf(lineNumber));
+                linesLabel.setText("Linee: " + lineNumber);
             }
         });
         return slider;
     }
 
-    private Hashtable<Integer, JLabel> getSliderHashtableDone(){
+    private Hashtable<Integer, JLabel> getSliderHashtableDone() {
         Hashtable<Integer, JLabel> position = new Hashtable<Integer, JLabel>(); //Dunno what the hell that does but whatever
         JLabel lbl;
-        for(int i = 0; i <= maxLineNumber; i+=20){
+        for (int i = 0; i <= maxLineNumber; i += 20) {
             lbl = new JLabel(String.valueOf(i));
             lbl.setFont(new Font("Futura", 0, 10));
             lbl.setForeground(Color.white);
@@ -282,17 +296,18 @@ class Graphical extends javax.swing.JFrame {
         return position;
     }
 
-    protected class CrossHair{
+    protected class CrossHair {
         Line2D horizontal, vertical;
         Ellipse2D e;
-        CrossHair(double screenX0, double screenY0, int lineNumber, double spaceBetweenLines, Color color){
+
+        CrossHair(double screenX0, double screenY0, int lineNumber, double spaceBetweenLines, Color color) {
             vertical = new Line2D.Double(screenX0, screenY0 - lineNumber * spaceBetweenLines, screenX0, screenY0 + lineNumber * spaceBetweenLines);
             horizontal = new Line2D.Double(screenX0 - lineNumber * spaceBetweenLines, screenY0, screenX0 + lineNumber * spaceBetweenLines, screenY0);
-          //  e = new Ellipse2D.Double(screenX0  - 8.6 * lineNumber / 2, screenY0 - 8.6 * lineNumber / 2, 8.6 * lineNumber, 8.6 * lineNumber);
-            drawMe((Graphics2D)getGraphics(), color);
+            //  e = new Ellipse2D.Double(screenX0  - 8.6 * lineNumber / 2, screenY0 - 8.6 * lineNumber / 2, 8.6 * lineNumber, 8.6 * lineNumber);
+            drawMe((Graphics2D) getGraphics(), color);
         }
 
-        private void drawMe(Graphics2D g, Color c){
+        private void drawMe(Graphics2D g, Color c) {
             Color temp = g.getColor();
             g.setColor(c);
             g.draw(horizontal);
@@ -317,8 +332,8 @@ class Graphical extends javax.swing.JFrame {
     }
 
 
-    private class EventHandlerFormChanger{
-        private void ColorSelected(JPanel temp){
+    private class EventHandlerFormChanger {
+        private void ColorSelected(JPanel temp) {
             gridColor = temp.getBackground();
             colorPalette.setVisible(false);
             Graphical.super.repaint();
