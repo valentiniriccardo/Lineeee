@@ -31,6 +31,7 @@ class Graphical extends javax.swing.JFrame {
     private JLabel rightFreeArea;
     private JFrame colorPalette;
     private JButton colorPaletteButton;
+    private JButton bgPaletteButton;
     private static Color gridColor = Color.green;
 
     private EventHandlerFormChanger ehfc;
@@ -38,7 +39,9 @@ class Graphical extends javax.swing.JFrame {
     public Graphical() {
         this.setBackground(defaultPlotAreaBackgroundColor);                         //setto la menu bar del colore sopra
         this.getContentPane().setBackground(defaultPlotAreaBackgroundColor);        //setto lo sfondo del frame di quel colore
+
         ehfc = new EventHandlerFormChanger();
+
         System.setProperty("apple.laf.useScreenMenuBar", "true");
         javax.swing.JMenuBar jmb = new javax.swing.JMenuBar();
         JMenu jmFile = new JMenu("Help");
@@ -104,6 +107,7 @@ class Graphical extends javax.swing.JFrame {
         setResizable(false);
         plotArea.setBackground(defaultPlotAreaBackgroundColor);
     }
+
 
     private void setColorPaletteButton() {
         // colorPaletteButton.setBorderPainted(true);
