@@ -10,8 +10,10 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.geom.Ellipse2D;
 import java.awt.geom.Line2D;
+import java.net.URL;
 import java.util.Hashtable;
 import java.util.Random;
+import com.apple.eawt.Application;
 
 class Graphical extends javax.swing.JFrame {
 
@@ -37,9 +39,12 @@ class Graphical extends javax.swing.JFrame {
     private EventHandlerFormChanger ehfc;
 
     public Graphical() {
+
+
+
         this.setBackground(defaultPlotAreaBackgroundColor);                         //setto la menu bar del colore sopra
         this.getContentPane().setBackground(defaultPlotAreaBackgroundColor);        //setto lo sfondo del frame di quel colore
-
+        this.setIconImage(new ImageIcon("Resources/appicon.png").getImage());
         ehfc = new EventHandlerFormChanger();
 
         System.setProperty("apple.laf.useScreenMenuBar", "true");
